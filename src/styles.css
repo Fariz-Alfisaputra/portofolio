@@ -1,0 +1,223 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Subtle grain-ish gradient backdrop */
+.bg-hero {
+  background:
+    radial-gradient(1200px 600px at 20% 10%, rgba(99, 102, 241, 0.20), transparent 55%),
+    radial-gradient(900px 500px at 80% 20%, rgba(236, 72, 153, 0.16), transparent 55%),
+    radial-gradient(900px 500px at 45% 90%, rgba(34, 197, 94, 0.10), transparent 60%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent 28%),
+    #05070c;
+}
+
+/* nicer scrollbar for dark UI */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) rgba(255, 255, 255, 0.06);
+}
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Avatar animation (inspired by reference) */
+@keyframes avatar-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes avatar-blob {
+  0%,
+  100% {
+    border-radius: 42% 58% 55% 45% / 48% 46% 54% 52%;
+  }
+  33% {
+    border-radius: 52% 48% 42% 58% / 55% 43% 57% 45%;
+  }
+  66% {
+    border-radius: 46% 54% 60% 40% / 44% 56% 44% 56%;
+  }
+}
+
+@keyframes avatar-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    filter: blur(18px) saturate(1.05);
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    filter: blur(22px) saturate(1.25);
+    transform: rotate(180deg);
+  }
+}
+
+.avatar-shell {
+  animation: avatar-float 6.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.avatar-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 40px 120px -70px rgba(0, 0, 0, 0.95);
+  animation: avatar-blob 9s ease-in-out infinite;
+}
+
+.avatar-card::before {
+  content: "";
+  position: absolute;
+  inset: -38%;
+  background: conic-gradient(
+    from 120deg,
+    rgba(167, 139, 250, 0.45),
+    rgba(251, 113, 133, 0.30),
+    rgba(52, 211, 153, 0.28),
+    rgba(167, 139, 250, 0.45)
+  );
+  animation: avatar-glow 7.5s ease-in-out infinite;
+  z-index: 0;
+}
+
+.avatar-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 10%, rgba(255, 255, 255, 0.18), transparent 55%),
+    linear-gradient(to top, rgba(5, 7, 12, 0.70), transparent 55%);
+  z-index: 2;
+}
+
+.avatar-media {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 300ms ease;
+}
+
+.avatar-card:hover .avatar-media {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-shell,
+  .avatar-card,
+  .avatar-card::before {
+    animation: none !important;
+  }
+}
+
+@layer base {
+  :root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.809 0.105 251.813);
+    --chart-2: oklch(0.623 0.214 259.815);
+    --chart-3: oklch(0.546 0.245 262.881);
+    --chart-4: oklch(0.488 0.243 264.376);
+    --chart-5: oklch(0.424 0.199 265.638);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+  }
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.809 0.105 251.813);
+    --chart-2: oklch(0.623 0.214 259.815);
+    --chart-3: oklch(0.546 0.245 262.881);
+    --chart-4: oklch(0.488 0.243 264.376);
+    --chart-5: oklch(0.424 0.199 265.638);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  .theme {
+    --font-sans: 'Inter Variable', sans-serif;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

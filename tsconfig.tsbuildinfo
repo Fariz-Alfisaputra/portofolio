@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/accent.tsx","./src/components/container.tsx","./src/components/glasscard.tsx","./src/components/navbar.tsx","./src/components/playlistcard.tsx","./src/components/sectionheader.tsx","./src/lib/data.ts","./src/lib/utils.ts"],"version":"5.9.3"}
