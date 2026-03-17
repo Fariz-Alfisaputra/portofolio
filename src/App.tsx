@@ -2,10 +2,14 @@ import { useMemo, useState } from "react";
 import Accent from "./components/Accent";
 import Container from "./components/Container";
 import GlassCard from "./components/GlassCard";
+import Galaxy from "./components/Galaxy";
 import Navbar from "./components/Navbar";
-import PlaylistCard from "./components/PlaylistCard";
+import PhotoStack from "./components/PhotoStack";
+import Reveal from "./components/Reveal";
 import SectionHeader from "./components/SectionHeader";
-import { funFacts, nav, playlist, projects, seedComments, technologies, thingsIDo } from "./lib/data";
+import TargetCursor from "./components/TargetCursor";
+import YouTubePlaylistCard from "./components/YouTubePlaylistCard";
+import { funFacts, nav, seedComments, technologies, thingsIDo, workExperience } from "./lib/data";
 import { cx } from "./lib/utils";
 import profileSrc from "./assets/profile-placeholder.svg";
 
@@ -29,72 +33,126 @@ export default function App() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const totalProjects = useMemo(() => projects.length, []);
+  const totalExperience = useMemo(() => workExperience.filter((e) => e.title !== "—").length, []);
 
   return (
-    <div id="top" className="min-h-screen bg-hero">
-      <Navbar />
+    <div id="top" className="min-h-screen">
+      {/* Galaxy background */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <Galaxy
+          className="absolute inset-0"
+          transparent
+          density={1}
+          hueShift={210}
+          glowIntensity={0.35}
+          twinkleIntensity={0.35}
+          rotationSpeed={0.05}
+          starSpeed={0.6}
+          mouseInteraction
+          mouseRepulsion
+          repulsionStrength={1.6}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_10%,rgba(99,102,241,0.22),transparent_55%),radial-gradient(900px_500px_at_80%_20%,rgba(236,72,153,0.16),transparent_55%),linear-gradient(to_bottom,rgba(5,7,12,0.55),rgba(5,7,12,0.92))]" />
+      </div>
+
+      <div className="relative z-10 bg-hero">
+        <TargetCursor
+          targetSelector=".nav-target"
+          hideDefaultCursor={false}
+          // make rotation effectively unnoticeable
+          spinDuration={999999}
+          parallaxOn={false}
+          hoverDuration={0.18}
+        />
+        <Navbar />
 
       {/* Hero */}
       <div className="border-b border-white/10">
         <Container className="py-12 sm:py-16">
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-                <span className="inline-flex size-2 rounded-full bg-emerald-400" />
-                Available for freelance
-              </div>
+              <Reveal>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+                  <span className="inline-flex size-2 rounded-full bg-emerald-400" />
+                  Available for freelance
+                </div>
+              </Reveal>
 
-              <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">
-                Hi, I'm <span className="text-white">Muhammad Fariz Alfisaputra.</span>
-              </h1>
-              <p className="mt-4 max-w-2xl text-white/70">
-                Greetings! I'm a passionate and detail-oriented Software Engineer based in Indonesia.
-                Prototype ini meniru layout website referensi: hero, playlist, skill, project, fun fact,
-                komentar, dan contact.
-              </p>
+              <Reveal delay={80} y={18}>
+                <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">
+                  Hi, I'm <span className="text-white">Muhammad Fariz Alfisaputra.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={140}>
+                <p className="mt-4 max-w-2xl text-white/70">
+                  Greetings! I'm a passionate and detail-oriented Software Engineer based in Indonesia.
+                </p>
+              </Reveal>
 
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <a
-                  href="#resume"
-                  className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink-950 transition hover:bg-white/90"
-                >
-                  Download CV
-                </a>
-                <a
-                  href="#contact"
-                  className="rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
-                >
-                  Contact
-                </a>
-                <div className="text-xs text-white/55">Scroll untuk lihat section lainnya.</div>
-              </div>
+              <Reveal delay={210}>
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    disabled
+                    className="cursor-not-allowed rounded-full bg-white/60 px-5 py-2.5 text-sm font-semibold text-ink-950/80"
+                    title="CV belum tersedia"
+                  >
+                    CV (soon)
+                  </button>
+                  <a
+                    href="#contact"
+                    className="rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+                  >
+                    Contact
+                  </a>
+                  <div className="text-xs text-white/55">Scroll untuk lihat section lainnya.</div>
+                </div>
+              </Reveal>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                <GlassCard className="relative overflow-hidden">
-                  <Accent tone="violet" />
-                  <div className="relative">
-                    <div className="text-xs font-semibold tracking-[0.25em] text-white/60">PROFILE</div>
-                    <div className="mt-2 text-lg font-semibold">Software Engineer</div>
-                    <div className="mt-1 text-white/70">Syiah Kuala University (prototype)</div>
-                  </div>
-                </GlassCard>
+                <Reveal delay={260}>
+                  <GlassCard className="relative overflow-hidden">
+                    <Accent tone="violet" />
+                    <div className="relative">
+                      <div className="text-xs font-semibold tracking-[0.25em] text-white/60">PROFILE</div>
+                      <div className="mt-2 text-lg font-semibold">Software Engineer</div>
+                      <div className="mt-1 text-white/70">Syiah Kuala University</div>
+                    </div>
+                  </GlassCard>
+                </Reveal>
 
-                <GlassCard className="relative overflow-hidden">
-                  <Accent tone="pink" />
-                  <div className="relative">
-                    <div className="text-xs font-semibold tracking-[0.25em] text-white/60">HIGHLIGHT</div>
-                    <div className="mt-2 text-lg font-semibold">Fast, clean UI</div>
-                    <div className="mt-1 text-white/70">Tailwind + responsive grid.</div>
-                  </div>
-                </GlassCard>
+                <Reveal delay={320}>
+                  <GlassCard className="relative overflow-hidden">
+                    <Accent tone="pink" />
+                    <div className="relative">
+                      <div className="text-xs font-semibold tracking-[0.25em] text-white/60">HIGHLIGHT</div>
+                      <div className="mt-2 text-lg font-semibold">Fast, clean UI</div>
+                      <div className="mt-1 text-white/70">Tailwind + responsive grid.</div>
+                    </div>
+                  </GlassCard>
+                </Reveal>
               </div>
             </div>
 
             <div className="lg:col-span-5">
               <div className="grid gap-6">
-                <Avatar />
-                <PlaylistCard tracks={playlist} />
+                <Reveal delay={120} y={22}>
+                  <PhotoStack
+                    photos={[
+                      { src: "/photos/fariz-1.jpg", zoom: 1.08, objectPosition: "62% 45%" },
+                      "/photos/fariz-2.JPG",
+                      "/photos/fariz-3.JPG",
+                    ]}
+                    altPrefix="Muhammad Fariz Alfisaputra"
+                  />
+                </Reveal>
+                <Reveal delay={220}>
+                  <YouTubePlaylistCard
+                    title="Late Night Coding"
+                    playlistId="PLDOukSJ4bvWmV5Y5P5MA01zYoCiTlJ4K9"
+                    openUrl="https://music.youtube.com/playlist?list=PLDOukSJ4bvWmV5Y5P5MA01zYoCiTlJ4K9"
+                  />
+                </Reveal>
               </div>
             </div>
           </div>
@@ -106,7 +164,9 @@ export default function App() {
         <Container className="py-14">
           <div className="grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-6">
-              <SectionHeader eyebrow="ABOUT" title="About Me" subtitle="Ringkas, jelas, dan mudah dibaca." />
+              <Reveal>
+                <SectionHeader eyebrow="ABOUT" title="About Me" subtitle="Ringkas, jelas, dan mudah dibaca." />
+              </Reveal>
               <GlassCard>
                 <p className="text-white/70">
                   Ini prototype portofolio dengan vibe gelap, card glass, dan section yang mirip seperti
@@ -117,14 +177,16 @@ export default function App() {
                   {[
                     ["Location", "Indonesia"],
                     ["Role", "Software Engineer"],
-                    ["Focus", "Web + IoT + RAG"],
-                    ["Email", "hello@example.com"]
-                  ].map(([k, v]) => (
-                    <div key={k} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                      <div className="text-xs text-white/55">{k}</div>
-                      <div className="mt-1 text-sm font-semibold">{v}</div>
-                    </div>
-                  ))}
+                      ["Focus", "Web + Video + RAG"],
+                      ["Email", "mfarizalfisaputra@gmail.com"],
+                    ].map(([k, v], i) => (
+                      <Reveal key={k} delay={180 + i * 60} className="contents">
+                        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                          <div className="text-xs text-white/55">{k}</div>
+                          <div className="mt-1 text-sm font-semibold">{v}</div>
+                        </div>
+                      </Reveal>
+                    ))}
                 </div>
               </GlassCard>
             </div>
@@ -156,25 +218,31 @@ export default function App() {
         <Container className="py-14">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <SectionHeader eyebrow="WORK" title="Things I've done" subtitle="Projects & highlights." />
+              <SectionHeader eyebrow="WORK" title="Work Experience" subtitle="Organisasi & kontribusi." />
               <div className="grid gap-4">
-                {projects.map((p) => (
-                  <GlassCard key={p.title} className="relative overflow-hidden">
+                {workExperience.map((e, i) => (
+                  <GlassCard key={`${e.title}-${i}`} className="relative overflow-hidden">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <div className="text-xl font-semibold">{p.title}</div>
-                        <div className="mt-2 text-sm text-white/70">{p.description}</div>
+                        <div className="text-xl font-semibold">{e.title}</div>
+                        <div className="mt-1 text-sm text-white/65">
+                          {e.org}
+                          {e.year ? <span className="text-white/45"> · {e.year}</span> : null}
+                        </div>
+                        {e.description ? <div className="mt-2 text-sm text-white/70">{e.description}</div> : null}
                       </div>
-                      <div className="flex flex-wrap gap-2 sm:justify-end">
-                        {p.tags.map((t) => (
+                      {e.tags.length ? (
+                        <div className="flex flex-wrap gap-2 sm:justify-end">
+                          {e.tags.map((t) => (
                           <span
                             key={t}
                             className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
                           >
                             {t}
                           </span>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   </GlassCard>
                 ))}
@@ -199,8 +267,8 @@ export default function App() {
                   <div className="text-xs font-semibold tracking-[0.25em] text-white/60">SUMMARY</div>
                   <div className="mt-2 grid grid-cols-2 gap-3 text-sm">
                     <div className="rounded-xl bg-white/5 p-3">
-                      <div className="text-white/55">Projects</div>
-                      <div className="mt-1 text-lg font-semibold tabular-nums">{totalProjects}</div>
+                      <div className="text-white/55">Experience</div>
+                      <div className="mt-1 text-lg font-semibold tabular-nums">{totalExperience}</div>
                     </div>
                     <div className="rounded-xl bg-white/5 p-3">
                       <div className="text-white/55">Sections</div>
@@ -238,9 +306,9 @@ export default function App() {
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-6">
               <SectionHeader
-                eyebrow="ALL COMMENT"
-                title="All Comment"
-                subtitle="Prototype list + form sederhana (tanpa backend)."
+                eyebrow="GUESTBOOK"
+                title="Guestbook"
+                subtitle="Tinggalkan pesan singkat—akan langsung muncul di list (prototype, tanpa backend)."
               />
               <div className="grid gap-3">
                 {comments.map((c, idx) => (
@@ -258,7 +326,11 @@ export default function App() {
             </div>
 
             <div className="lg:col-span-6">
-              <SectionHeader eyebrow="LEAVE A COMMENT" title="Write something" subtitle="Disimpan ke state lokal." />
+              <SectionHeader
+                eyebrow="SIGN"
+                title="Write something"
+                subtitle="Isi form ini, lalu pesannya otomatis masuk ke guestbook."
+              />
               <GlassCard>
                 <form
                   className="grid gap-4"
@@ -296,7 +368,7 @@ export default function App() {
                       className="min-h-32 w-full resize-none rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/40"
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Write a comment..."
+                      placeholder="Write a message..."
                     />
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-3">
@@ -332,20 +404,48 @@ export default function App() {
               />
               <GlassCard>
                 <div className="grid gap-3">
-                  {[
-                    ["Email", "hello@example.com"],
-                    ["WhatsApp", "+62 812-0000-0000"],
-                    ["LinkedIn", "linkedin.com/in/username"],
-                    ["GitHub", "github.com/username"]
-                  ].map(([k, v]) => (
-                    <div
-                      key={k}
-                      className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4"
-                    >
-                      <div className="text-sm text-white/65">{k}</div>
-                      <div className="truncate text-sm font-semibold">{v}</div>
-                    </div>
-                  ))}
+                  {(() => {
+                    const email = "mfarizalfisaputra@gmail.com";
+                    const waNumberIntl = "6283194565515";
+                    const waText = encodeURIComponent("Keren porto nya, boleh tanya?");
+                    const items = [
+                      {
+                        key: "Email",
+                        display: email,
+                        href: `mailto:${email}?subject=${encodeURIComponent("Halo Fariz")}&body=${encodeURIComponent(
+                          "Keren porto nya, boleh tanya?",
+                        )}`,
+                      },
+                      {
+                        key: "WhatsApp",
+                        display: "+62 831-9456-5515",
+                        href: `https://wa.me/${waNumberIntl}?text=${waText}`,
+                      },
+                      {
+                        key: "LinkedIn",
+                        display: "linkedin.com/in/username",
+                        href: "https://linkedin.com/in/username",
+                      },
+                      {
+                        key: "GitHub",
+                        display: "github.com/Fariz-Alfisaputra",
+                        href: "https://github.com/Fariz-Alfisaputra",
+                      },
+                    ] as const;
+
+                    return items.map((it) => (
+                      <a
+                        key={it.key}
+                        href={it.href}
+                        target={it.href.startsWith("http") ? "_blank" : undefined}
+                        rel={it.href.startsWith("http") ? "noreferrer" : undefined}
+                        className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
+                      >
+                        <div className="text-sm text-white/65">{it.key}</div>
+                        <div className="truncate text-sm font-semibold">{it.display}</div>
+                      </a>
+                    ));
+                  })()}
                 </div>
               </GlassCard>
             </div>
@@ -377,6 +477,7 @@ export default function App() {
           </div>
         </Container>
       </section>
+      </div>
     </div>
   );
 }

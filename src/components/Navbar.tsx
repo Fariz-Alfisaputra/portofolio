@@ -38,8 +38,13 @@ export default function Navbar() {
     <div className="sticky top-0 z-50 border-b border-white/10 bg-ink-950/70 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
         <a href="#top" className="flex items-center gap-2">
-          <span className="grid size-9 place-items-center rounded-xl bg-white/10 text-sm font-semibold">
-            M
+          <span className="relative size-9 overflow-hidden rounded-xl border border-white/10 bg-white/10">
+            <img
+              src="/photos/pp-fariz.jpg"
+              alt="Muhammad Fariz Alfisaputra"
+              className="h-full w-full object-cover"
+              loading="eager"
+            />
           </span>
           <div className="leading-tight">
             <div className="text-sm font-semibold">Muhammad Fariz</div>
@@ -47,7 +52,7 @@ export default function Navbar() {
           </div>
         </a>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="nav-cursor-zone hidden items-center gap-1 md:flex">
           {nav.map((item) => {
             const isActive = active === item.id;
             return (
@@ -55,7 +60,7 @@ export default function Navbar() {
                 key={item.id}
                 href={item.href}
                 className={cx(
-                  "rounded-full px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white",
+                  "nav-target rounded-full px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white",
                   isActive && "bg-white/10 text-white",
                 )}
               >
@@ -65,14 +70,7 @@ export default function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <a
-            href="#contact"
-            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink-950 transition hover:bg-white/90"
-          >
-            Contact
-          </a>
-        </div>
+        <div className="hidden md:block" />
       </Container>
     </div>
   );
